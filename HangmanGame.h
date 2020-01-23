@@ -21,7 +21,7 @@ private:
 
     int guesses ;
     const int MAX_GUESSES = 10;
-    std::vector <std::string> wordVec;
+    //std::vector <std::string> wordVec;
 
 public:
 
