@@ -20,7 +20,7 @@ private:
     std::string letterGuess;
 
     int guesses ;
-    const int MAX_GUESSES = 10;
+
     //std::vector <std::string> wordVec;
 
 public:
@@ -29,13 +29,21 @@ public:
 
     static void displayMessage();
 
-    static std::string getWord();
+    static std::string pickWord();
 
-    static std::string hideWord();
+    static std::string hideWord(std:: string word);
 
-    static std::string checkGuess();
+    static std::string checkGuess(std::string word, std::string hiddenWord, std::string guess);
 
-    static void increaseGuess();
+    void increaseGuess();
+
+    int getGuesses();
+
+    std::string getWord();
+
+    std::string getHiddenWord();
+
+    void setHiddenWord(std::string hWord);
 
 
 
