@@ -2,6 +2,15 @@
 //CS 120
 //Project 1
 
+/*
+ * This is the main driver for the Hangman Game project.
+ * This file contains the main class and does the footwork.
+ * A game object is created and a random word will be chosen to play with. The player has 15 guesses to
+ * try and guess the word. While the player is guessing, the program loops through multiple functions to keep the
+ * word hidden until the player either guesses the word or runs out of choices. The into and final messages are
+ * displayed within this file.
+ */
+
 #include <iostream>
 #include "HangmanGame.h"
 
