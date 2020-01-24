@@ -1,8 +1,8 @@
 # ME-Project1
 
-Examples of Errors Found:
+###Examples of Errors Found:
 
-Compiler Errors:
+####Compiler Errors:
 
 CMake Error at CMakeLists.txt:6 (add_executable):
   Cannot find source file:
@@ -37,7 +37,7 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
     
     Solution: once I included the header file versus the .cpp file the issue was resolved
 
-Runtime Errors:
+####Runtime Errors:
 
 I ran into a few runtime issues with this block of code:
 
@@ -73,3 +73,31 @@ instantly say that you lost the game and display the word without allowing any g
     
     Solution: All the function needed to open the file properly was to add: (string("../")) before the file name
     within the call. 
+    
+###Style Choice
+
+This project has two branches to represent the two groupings of style choices.
+
+Style 1: 
+- Hanging braces
+- Camel case
+- Top of file documentation
+- Conventional variable naming
+
+Style 2:
+- Egyptian style braces
+- Snake case
+- RME documentation
+- Prefixed variable naming
+
+Personal preference:
+    I prefer Style 1 over Style 2. I tend to go back and forth with curly braces
+    style. Sometimes I prefer hanging braces because it is easier to tell the blocks
+    of code apart, yet it takes up more line space. I exclusively use camel casing 
+    for coding. I think that it looks much nicer and doesn't clog up the line with excessive
+    underscores. I typically use the conventional variable naming, because there's only two 
+    prefixes that would come into play (field and parameter), so I don't personally see 
+    the need to make the change. For function documentation I tend to go for my own version of
+    RME. This is the first time I've seen that style of comments, but will most likely 
+    adopt it as time goes on. So, my opinions seem to jump between the two style partitions
+    in this project, but I definitely have my preferences. 
