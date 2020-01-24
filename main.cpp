@@ -4,11 +4,7 @@
 
 /*
  * This is the main driver for the Hangman Game project.
- * This file contains the main class and does the footwork.
- * A game object is created and a random word will be chosen to play with. The player has 15 guesses to
- * try and guess the word. While the player is guessing, the program loops through multiple functions to keep the
- * word hidden until the player either guesses the word or runs out of choices. The into and final messages are
- * displayed within this file.
+ * A game object is created and the file loops through until the game is won or lost.
  */
 
 #include <iostream>
@@ -16,8 +12,7 @@
 
 
 using namespace std;
-int main()
-{
+int main(){
     //declare the maximum number of guesses allowed
     const int MAX_GUESSES = 15;
 
@@ -25,39 +20,35 @@ int main()
     HangmanGame game;
 
     //while loop to continue game until the user runs out of guesses or guessed the word
-    while (game.getGuesses() < MAX_GUESSES && game.getHiddenWord().find('*') != std::string::npos)
-    {
+    while (game.get_guesses() < MAX_GUESSES && game.get_hidden_word().find('*') != std::string::npos){
         //display the hidden word and number of incorrect guesses
-        cout << "Word: " << game.getHiddenWord() << ", Guesses taken: " << game.getGuesses() << endl;
+        cout << "Word: " << game.get_hidden_word() << ", Guesses taken: " << game.get_guesses() << endl;
 
         //user input is the guess
-        string letterGuess;
+        string letter_guess;
         cout << "Enter your guess: ";
-        cin >> letterGuess ;
+        cin >> letter_guess ;
 
         //exit the loop if the guess was the correct word
-        if (letterGuess == game.getWord())
-        {
+        if (letter_guess == game.get_word()){
             //set the hidden word the original word
-            game.setHiddenWord(game.getWord());
+            game.set_hidden_word(game.get_word());
             break;
         }
 
         //check if the guess is included in the word
-        game.setHiddenWord(game.checkGuess(game.getWord(), game.getHiddenWord(), letterGuess));
+        game.set_hidden_word(game.check_guess(game.get_word(), game.get_hidden_word(), letter_guess));
         //increase the number of guesses with each iteration of the loop
-        game.increaseGuess();
+        game.increase_guess();
     }
 
     //if exited the loop then the player either guessed the word
     //or ran out of guesses
-    if (game.getHiddenWord()==(game.getWord()))
-    {
-        cout <<"Congratulations, you guessed it! The word was " << game.getWord();
+    if (game.get_hidden_word()==(game.get_word())){
+        cout <<"Congratulations, you guessed it! The word was " << game.get_word();
     }
-    else
-    {
-        cout << "Out of tries! The word was " << game.getWord();
+    else {
+        cout << "Out of tries! The word was " << game.get_word();
     }
 
 };

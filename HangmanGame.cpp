@@ -5,24 +5,6 @@
 /*
  * The HangmanGame.cpp file is the source code for all of the functions used. All declared functions are given
  * their actual functionality in this file.
- *
- * HangmanGame() is the default constructor. It takes in no parameters. It will display the intro messages as well as
- *      choose the word and 'hide' it
- * displayMessage() is a void function that takes in no parameters. It outputs the instructions of the game onto
- *      the console
- * pickWord() takes in no parameters, but will return a string. This function pushes words into a <string> vector read
- *      from a file. A random number is then chosen between 1-1000 and the words at this index in the vector will be
- *      used during the game.
- * hideWord() will take in a string as a parameter and return the word replaced with asterics
- * checkGuess() takes in the game word as a string, the hidden version of the word as a string, and the string guess from
- *      the player. It will then loop through the hidden word and update it to show any occurrences of the guess. The
- *      updated word is returned
- * increaseGuesses() is a void function and takes in no parameters. This function will increase the guesses field by one.
- * getGuesses() takes in no parameters and will return the int number of guesses taken.
- * getWord() takes in no parameters and will return the string of the word that is being used in the current game.
- * getHiddenWord() takes in no parameters and will return the string of the current hidden version, showing all
- *      astericks and correctly guess characters.
- * setHiddenWord() is a void function that will take in a string as a parameter. This function updates the hiddenWord field.
  */
 
 #include "HangmanGame.h"
@@ -35,59 +17,73 @@
 using namespace std;
 
 //default constructor
-HangmanGame::HangmanGame()
-{
-    displayMessage();
-    guesses = 0; //initialize the guesses
+/**
+ * Requires: nothing
+ * Modifies: word, hiddenWord, guesses
+ * Effects:  Returns nothing
+ */
+HangmanGame::HangmanGame(){
+    display_message();
+    f_guesses = 0; //initialize the guesses
 
-    word = pickWord(); //choose the word & initialize variable
-    hiddenWord = hideWord(word); //hide the word & initialize the word
+    f_word = pick_word(); //choose the word & initialize variable
+    f_hidden_word = hide_word(f_word); //hide the word & initialize the word
 }
 
-void HangmanGame::displayMessage()
-{
+/**
+ * Requires: nothing
+ * Modifies: nothing
+ * Effects:  displays the introduction message
+ */
+void HangmanGame::display_message(){
     //display the into messages
     cout << "Welcome to the Hangman Game!\nThe computer will choose a random word from the '1000 most common words'"<< endl;
     cout << "You will have a maximum of 10 guesses. Feel free to guess the full word at any point." << endl;
 
 }
 
-string HangmanGame::pickWord()
-{
+/**
+ * Requires: nothing
+ * Modifies: word
+ * Effects:  returns string. loads the words from a file into a temp vector and picks one randomly
+ */
+string HangmanGame::pick_word(){
     //seed the random number generator
     srand((unsigned) time(0));
 
     //create vector to hold all of the words pulled in
-    vector <string> wordVec;
-    string readWord; //create variable to hold each word read in
+    vector <string> word_vec;
+    string read_word; //create variable to hold each word read in
 
     //create the input stream for the file
-    ifstream fIn;
+    ifstream f_in;
     //find the text file and open it
-    fIn.open(string("../") + "1-1000.txt");
+    f_in.open(string("../") + "1-1000.txt");
     //while the file still has information and is good
-    while (fIn && fIn.peek() != EOF)
-    {
+    while (f_in && f_in.peek() != EOF){
         //read in each line and store in the temp variable
-        getline(fIn, readWord);
-        wordVec.push_back(readWord); //add the word to the vector
+        getline(f_in, read_word);
+        word_vec.push_back(read_word); //add the word to the vector
     }
     //use the random number generator to pick a number between 0-1000
-    int wordChoice = (rand() %1000);
+    int word_choice = (rand() %1000);
 
-    fIn.close(); //close the file
+    f_in.close(); //close the file
 
     //the word at the random index in the vector will be the word used
-    return wordVec[wordChoice];
+    return word_vec[word_choice];
 }
 
-string HangmanGame::hideWord(string word)
-{
+/**
+ * Requires: string word
+ * Modifies: hiddenWord
+ * Effects:  returns string. loops through the words and replaces all characters with '*'
+ */
+string HangmanGame::hide_word(string p_word){
     //initialize empty string
     string hidden = "";
     //loop through the word
-    for (int i = 0; i < word.length(); i++)
-    {
+    for (int i = 0; i < p_word.length(); i++){
         //add an asterick for every letter in the word
         hidden+="*";
     }
@@ -95,45 +91,68 @@ string HangmanGame::hideWord(string word)
     return hidden;
 }
 
-string HangmanGame::checkGuess(string word, string hiddenWord, string guess)
-{
+/**
+ * Requires: string word, string hiddenWord, string guess
+ * Modifies: hiddenWord
+ * Effects:  returns string. compares the word with the guess and updates the hiddenWord to reflect guess.
+ */
+string HangmanGame::check_guess(string p_word, string p_hidden_word, string p_guess){
     //declare temporary string
-    string tempHidden = "";
+    string temp_hidden = "";
     //loop through the word
-    for (int i = 0; i < word.length(); i++)
-    {
-        if (word[i] == tolower(guess[0])) //character is equal
-            tempHidden += guess[0]; //add character to string
-        else if (hiddenWord[i] != ('*')) //letter was already guessed
-            tempHidden += hiddenWord[i]; //add previously guessed character to string
+    for (int i = 0; i < p_word.length(); i++){
+        if (p_word[i] == tolower(p_guess[0])) //character is equal
+            temp_hidden += p_guess[0]; //add character to string
+        else if (p_hidden_word[i] != ('*')) //letter was already guessed
+            temp_hidden += p_hidden_word[i]; //add previously guessed character to string
         else //guess was not correct
-            tempHidden += "*"; //keep character hidden
+            temp_hidden += "*"; //keep character hidden
     }
 
-    return tempHidden;
+    return temp_hidden;
 }
 
-void HangmanGame::increaseGuess()
-{
-    guesses ++; //increase the number of guesses used
+/**
+ * Requires: nothing
+ * Modifies: guesses
+ * Effects:  increases the guess count by 1
+ */
+void HangmanGame::increase_guess(){
+    f_guesses ++; //increase the number of guesses used
 }
 
-int HangmanGame::getGuesses()
-{
-    return guesses; //return the number of guesses used
+/**
+ * Requires: nothing
+ * Modifies: nothing
+ * Effects:  Returns int guesses
+ */
+int HangmanGame::get_guesses(){
+    return f_guesses; //return the number of guesses used
 }
 
-std::string HangmanGame::getWord()
-{
-    return word; //return the word that is being used in the game
+/**
+ * Requires: nothing
+ * Modifies: nothing
+ * Effects:  Returns string word
+ */
+std::string HangmanGame::get_word(){
+    return f_word; //return the word that is being used in the game
 }
 
-std::string HangmanGame::getHiddenWord()
-{
-    return hiddenWord; //return the hidden version of the word being used
+/**
+ * Requires: nothing
+ * Modifies: nothing
+ * Effects:  returns string hiddenWord
+ */
+std::string HangmanGame::get_hidden_word(){
+    return f_hidden_word; //return the hidden version of the word being used
 }
 
-void HangmanGame::setHiddenWord(string hWord)
-{
-    hiddenWord = hWord; //set the hidden word
+/**
+ * Requires: string hWord
+ * Modifies: hiddenWord
+ * Effects:  changes the hiddenWord to the parameter
+ */
+void HangmanGame::set_hidden_word(string p_hidden_word){
+    f_hidden_word = p_hidden_word; //set the hidden word
 }

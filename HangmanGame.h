@@ -4,13 +4,6 @@
 
 /*
  * The HangmanGame.h file contains all function declarations and private fields.
- * Private fields:
- * string word : the word that will be guessed in the game
- * string hiddenWord : the version of the word that shows correct guesses and what's left to be guessed
- * int guesses : the current count of number of guesses taken
- * Public functions:
- * displayMessage() ; pickWord() ; hideWord() ; checkGuess() ; increaseGuess() ; getGuesses() ; getWord()
- * getHiddenWord() ; setHiddenWord()
  */
 
 #ifndef MOLLYEATONPROJECT1_HANGMANGAME_H
@@ -20,35 +13,38 @@
 #include <fstream>
 #include <iostream>
 
-class HangmanGame
-{
+class HangmanGame{
 private:
-    std::string word;
-    std::string hiddenWord;
+    //fields
+    std::string f_word;
+    std::string f_hidden_word;
 
-    int guesses ;
+    int f_guesses ;
 
 public:
-
+    //default constructor
     HangmanGame();
 
-    static void displayMessage();
+    //game functions
+    static void display_message();
 
-    static std::string pickWord();
+    static std::string pick_word();
 
-    static std::string hideWord(std:: string word);
+    static std::string hide_word(std:: string p_word);
 
-    static std::string checkGuess(std::string word, std::string hiddenWord, std::string guess);
+    static std::string check_guess(std::string p_word, std::string p_hidden_word, std::string p_guess);
 
-    void increaseGuess();
+    void increase_guess();
 
-    int getGuesses();
+    //getters
+    int get_guesses();
 
-    std::string getWord();
+    std::string get_word();
 
-    std::string getHiddenWord();
+    std::string get_hidden_word();
 
-    void setHiddenWord(std::string hWord);
+    //setter
+    void set_hidden_word(std::string p_hidden_word);
 
 };
 
