@@ -1,16 +1,13 @@
-//
-// Created by Molly on 1/23/20.
-//
+// Molly Eaton
+// CS 120
+// Project 1
 
 #ifndef MOLLYEATONPROJECT1_HANGMANGAME_H
 #define MOLLYEATONPROJECT1_HANGMANGAME_H
 
-#include <string>
 #include <vector>
 #include <fstream>
 #include <iostream>
-
-
 
 class HangmanGame
 {

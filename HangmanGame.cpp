@@ -1,67 +1,78 @@
-//
-// Created by Molly on 1/23/20.
-//
-//#include <boost/algorithm/string.hpp>
+//Molly Eaton
+//CS 120
+//Project 1
+
 #include "HangmanGame.h"
 #include <ctime>
 #include <iomanip>
 #include <iostream>
 #include <vector>
-#include <string>
 #include <cstdlib>
 
 using namespace std;
 
-inline HangmanGame::HangmanGame()
+//default constructor
+HangmanGame::HangmanGame()
 {
     displayMessage();
-    guesses = 0;
+    guesses = 0; //initialize the guesses
 
-    word = pickWord();
-    hiddenWord = hideWord(word);
+    word = pickWord(); //choose the word & initialize variable
+    hiddenWord = hideWord(word); //hide the word & initialize the word
 }
 
-inline void HangmanGame::displayMessage()
+void HangmanGame::displayMessage()
 {
+    //display the into messages
     cout << "Welcome to the Hangman Game!\nThe computer will choose a random word from the '1000 most common words'"<< endl;
     cout << "You will have a maximum of 10 guesses. Feel free to guess the full word at any point." << endl;
 
 }
 
-inline string HangmanGame::pickWord()
+string HangmanGame::pickWord()
 {
+    //seed the random number generator
     srand((unsigned) time(0));
+
+    //create vector to hold all of the words pulled in
     vector <string> wordVec;
-    string readWord;
+    string readWord; //create variable to hold each word read in
+
+    //create the input stream for the file
     ifstream fIn;
-    //find the csv file and open it
+    //find the text file and open it
     fIn.open(string("../") + "1-1000.txt");
+    //while the file still has information and is good
     while (fIn && fIn.peek() != EOF)
     {
+        //read in each line and store in the temp variable
         getline(fIn, readWord);
-        wordVec.push_back(readWord);
+        wordVec.push_back(readWord); //add the word to the vector
     }
+    //use the random number generator to pick a number between 0-1000
     int wordChoice = (rand() %1000);
 
-    fIn.close();
+    fIn.close(); //close the file
+
+    //the word at the random index in the vector will be the word used
     return wordVec[wordChoice];
 }
 
-inline string HangmanGame::hideWord(string word)
+string HangmanGame::hideWord(string word)
 {
     //initialize empty string
     string hidden = "";
     //loop through the word
     for (int i = 0; i < word.length(); i++)
     {
+        //add an asterick for every letter in the word
         hidden+="*";
     }
 
     return hidden;
-
 }
 
-inline string HangmanGame::checkGuess(string word, string hiddenWord, string guess)
+string HangmanGame::checkGuess(string word, string hiddenWord, string guess)
 {
     //declare temporary string
     string tempHidden = "";
@@ -77,30 +88,29 @@ inline string HangmanGame::checkGuess(string word, string hiddenWord, string gue
     }
 
     return tempHidden;
-
 }
 
-inline void HangmanGame::increaseGuess()
+void HangmanGame::increaseGuess()
 {
-    guesses ++;
+    guesses ++; //increase the number of guesses used
 }
 
-inline int HangmanGame::getGuesses()
+int HangmanGame::getGuesses()
 {
-    return guesses;
+    return guesses; //return the number of guesses used
 }
 
-inline std::string HangmanGame::getWord()
+std::string HangmanGame::getWord()
 {
-    return word;
+    return word; //return the word that is being used in the game
 }
 
-inline std::string HangmanGame::getHiddenWord()
+std::string HangmanGame::getHiddenWord()
 {
-    return hiddenWord;
+    return hiddenWord; //return the hidden version of the word being used
 }
 
-inline void HangmanGame::setHiddenWord(string hWord)
+void HangmanGame::setHiddenWord(string hWord)
 {
-    hiddenWord = hWord;
+    hiddenWord = hWord; //set the hidden word
 }
